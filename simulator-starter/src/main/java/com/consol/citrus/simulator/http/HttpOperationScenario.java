@@ -30,7 +30,7 @@ import java.util.stream.Collectors;
 public class HttpOperationScenario extends AbstractSimulatorScenario {
 
     /** Loop counter for recursion */
-    private int cycle;
+    private Map<String, Integer> controlRef = new HashMap<>();
 
     /** Operation in wsdl */
     private final Operation operation;
@@ -182,19 +182,37 @@ public class HttpOperationScenario extends AbstractSimulatorScenario {
 
         if (property instanceof RefProperty) {
             Model model = definitions.get(((RefProperty) property).getSimpleRef());
-            payload.append("{");
 
-            if (model.getProperties() != null) {
-                for (Map.Entry<String, Property> entry : model.getProperties().entrySet()) {
-                    payload.append("\"").append(entry.getKey()).append("\": ").append(createRandomValue(entry.getValue(), true)).append(",");
+            boolean b = true;
+            String ref = ((RefProperty) property).getSimpleRef();
+            if (controlRef.containsKey(ref)) {
+                if (controlRef.get(ref) > 2) {
+                    b = false;
+                    payload.append("null");
+                } else {
+                    controlRef.put(ref, controlRef.get(ref) + 1);
                 }
+            } else {
+                controlRef.put(ref, 1);
             }
 
-            if (payload.toString().endsWith(",")) {
-                payload.replace(payload.length() - 1, payload.length(), "");
-            }
+            if (b) {
+                payload.append("{");
 
-            payload.append("}");
+                if (model.getProperties() != null) {
+                    for (Map.Entry<String, Property> entry : model.getProperties().entrySet()) {
+                        payload.append("\"").append(entry.getKey()).append("\": ").append(createRandomValue(entry.getValue(), true)).append(",");
+                    }
+                }
+
+                controlRef.put(ref, controlRef.get(ref) - 1);
+
+                if (payload.toString().endsWith(",")) {
+                    payload.replace(payload.length() - 1, payload.length(), "");
+                }
+
+                payload.append("}");
+            }
         } else if (property instanceof ArrayProperty ) {
             payload.append("[");
             payload.append(createRandomValue(((ArrayProperty) property).getItems(), true));
