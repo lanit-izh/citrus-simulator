@@ -14,6 +14,9 @@
   <inceptionYear>2017</inceptionYear>
 
   <properties>
+    <github.global.server>github</github.global.server>
+    <github.maven-plugin>0.10</github.maven-plugin>
+
     <java.version>1.8</java.version>
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
@@ -37,28 +40,6 @@
     <reuseForks>true</reuseForks>
   </properties>
 
-  <licenses>
-    <license>
-      <name>The Apache License, Version 2.0</name>
-      <url>http://www.apache.org/licenses/LICENSE-2.0.txt</url>
-      <distribution>manual</distribution>
-      <comments>Citrus is published free of charge under Apache License, Version 2.0. You are allowed to use Citrus to test any kind of software
-        (also commercial applications). If you do this, we kindly ask you to tell us about it so that we can add you to our references
-        list. You may also use our "Tested using Citrus" logo in your online or printed documentation.</comments>
-    </license>
-  </licenses>
-
-  <ciManagement>
-    <system>Jenkins</system>
-    <url>http://labs-build.consol.de/view/Citrus/</url>
-    <notifiers>
-      <notifier>
-        <type>mail</type>
-        <address>citrus-dev-l@consol.de</address>
-      </notifier>
-    </notifiers>
-  </ciManagement>
-
   <modules>
     <module>simulator-starter</module>
     <module>simulator-ui</module>
@@ -66,68 +47,6 @@
     <module>simulator-samples</module>
     <module>simulator-archetypes</module>
   </modules>
-
-  <developers>
-    <developer>
-      <id>christophd</id>
-      <name>Christoph Deppisch</name>
-      <email>citrus-dev-l@consol.de</email>
-      <organization>ConSol Software GmbH</organization>
-      <organizationUrl>http://www.consol.de/</organizationUrl>
-      <roles>
-        <role>Developer</role>
-      </roles>
-    </developer>
-    <developer>
-      <id>maherma</id>
-      <name>Martin Maher</name>
-      <email>citrus-dev-l@consol.de</email>
-      <organization>ConSol Software GmbH</organization>
-      <organizationUrl>http://www.consol.de/</organizationUrl>
-      <roles>
-        <role>Developer</role>
-      </roles>
-    </developer>
-    <developer>
-      <id>joroboro</id>
-      <name>Georgi Todorov</name>
-      <email>citrus-dev-l@consol.de</email>
-      <organization>ConSol Software GmbH</organization>
-      <organizationUrl>http://www.consol.de/</organizationUrl>
-      <roles>
-        <role>Developer</role>
-      </roles>
-    </developer>
-  </developers>
-
-  <scm>
-    <connection>scm:git:git@github.com:citrusframework/citrus-simulator.git</connection>
-    <developerConnection>scm:git:git@github.com/citrusframework/citrus-simulator.git</developerConnection>
-    <url>http://github.com/citrusframework/citrus-simulator.git</url>
-  </scm>
-
-  <organization>
-    <name>ConSol Software GmbH</name>
-    <url>http://www.consol.com/</url>
-  </organization>
-
-  <mailingLists>
-    <mailingList>
-      <name>Project Announcements</name>
-    </mailingList>
-    <mailingList>
-      <name>Project Development List</name>
-      <post>dev@citrusframework.org</post>
-    </mailingList>
-    <mailingList>
-      <name>Project User List</name>
-      <post>user@citrusframework.org</post>
-    </mailingList>
-    <mailingList>
-      <name>Internal Project Development List</name>
-      <post>citrus-dev-l@consol.de</post>
-    </mailingList>
-  </mailingLists>
 
   <dependencyManagement>
     <dependencies>
@@ -286,182 +205,6 @@
     </dependency>
   </dependencies>
 
-  <build>
-    <pluginManagement>
-      <plugins>
-        <plugin>
-          <artifactId>maven-compiler-plugin</artifactId>
-          <version>3.8.1</version>
-          <configuration>
-            <encoding>${project.build.sourceEncoding}</encoding>
-            <source>${java.version}</source>
-            <target>${java.version}</target>
-            <annotationProcessorPaths>
-              <path>
-                <groupId>org.projectlombok</groupId>
-                <artifactId>lombok</artifactId>
-                <version>${lombok.version}</version>
-              </path>
-            </annotationProcessorPaths>
-          </configuration>
-        </plugin>
-        <plugin>
-          <artifactId>maven-resources-plugin</artifactId>
-          <version>3.1.0</version>
-        </plugin>
-        <plugin>
-          <artifactId>maven-jar-plugin</artifactId>
-          <version>3.1.0</version>
-          <configuration>
-            <archive>
-              <addMavenDescriptor>true</addMavenDescriptor>
-            </archive>
-          </configuration>
-        </plugin>
-        <plugin>
-          <artifactId>maven-war-plugin</artifactId>
-          <version>3.1.0</version>
-        </plugin>
-        <plugin>
-          <artifactId>maven-clean-plugin</artifactId>
-          <version>3.1.0</version>
-        </plugin>
-        <plugin>
-          <artifactId>maven-scm-plugin</artifactId>
-          <version>1.11.2</version>
-        </plugin>
-        <plugin>
-          <artifactId>maven-deploy-plugin</artifactId>
-          <version>2.8.2</version>
-        </plugin>
-
-        <plugin>
-          <groupId>com.github.eirslett</groupId>
-          <artifactId>frontend-maven-plugin</artifactId>
-          <version>1.7.6</version>
-        </plugin>
-
-        <plugin>
-          <artifactId>maven-source-plugin</artifactId>
-          <version>3.1.0</version>
-          <executions>
-            <execution>
-              <id>attach-sources</id>
-              <goals>
-                <goal>jar-no-fork</goal>
-              </goals>
-            </execution>
-          </executions>
-        </plugin>
-
-        <plugin>
-          <artifactId>maven-javadoc-plugin</artifactId>
-          <version>3.1.0</version>
-          <configuration>
-            <doclint>${javadoc.doclint}</doclint>
-          </configuration>
-          <executions>
-            <execution>
-              <id>attach-javadocs</id>
-              <goals>
-                <goal>jar</goal>
-              </goals>
-            </execution>
-          </executions>
-        </plugin>
-
-        <plugin>
-          <artifactId>maven-surefire-plugin</artifactId>
-          <version>3.0.0-M3</version>
-          <configuration>
-            <forkCount>1</forkCount>
-            <reuseForks>${reuseForks}</reuseForks>
-            <failIfNoTests>false</failIfNoTests>
-          </configuration>
-        </plugin>
-
-        <plugin>
-          <artifactId>maven-failsafe-plugin</artifactId>
-          <version>3.0.0-M3</version>
-          <configuration>
-            <failIfNoTests>false</failIfNoTests>
-          </configuration>
-        </plugin>
-
-        <plugin>
-          <artifactId>maven-gpg-plugin</artifactId>
-          <version>1.6</version>
-          <executions>
-            <execution>
-              <id>sign-artifacts</id>
-              <phase>verify</phase>
-              <goals>
-                <goal>sign</goal>
-              </goals>
-            </execution>
-          </executions>
-          <configuration>
-            <useAgent>true</useAgent>
-            <keyname>dev@citrusframework.org</keyname>
-            <skip>${skip.gpg}</skip>
-            <gpgArguments>
-              <arg>--allow-weak-digest-algos</arg>
-            </gpgArguments>
-          </configuration>
-        </plugin>
-
-        <plugin>
-          <groupId>org.sonatype.plugins</groupId>
-          <artifactId>nexus-staging-maven-plugin</artifactId>
-          <version>1.6.8</version>
-          <configuration>
-            <nexusUrl>https://oss.sonatype.org/</nexusUrl>
-            <serverId>sonatype-nexus-staging</serverId>
-          </configuration>
-        </plugin>
-
-        <plugin>
-          <groupId>org.apache.rat</groupId>
-          <artifactId>apache-rat-plugin</artifactId>
-          <version>0.13</version>
-          <configuration>
-            <includes>
-              <include>**/*.java</include>
-            </includes>
-            <excludeSubProjects>false</excludeSubProjects>
-          </configuration>
-        </plugin>
-
-        <plugin>
-          <groupId>org.codehaus.mojo</groupId>
-          <artifactId>versions-maven-plugin</artifactId>
-          <version>2.7</version>
-        </plugin>
-      </plugins>
-    </pluginManagement>
-
-    <!-- Default plugins for all modules -->
-    <plugins>
-      <plugin>
-        <artifactId>maven-source-plugin</artifactId>
-      </plugin>
-      <plugin>
-        <artifactId>maven-javadoc-plugin</artifactId>
-      </plugin>
-      <plugin>
-        <groupId>org.apache.rat</groupId>
-        <artifactId>apache-rat-plugin</artifactId>
-      </plugin>
-    </plugins>
-
-    <extensions>
-      <extension>
-        <groupId>org.apache.maven.wagon</groupId>
-        <artifactId>wagon-ssh-external</artifactId>
-        <version>3.3.3</version>
-      </extension>
-    </extensions>
-  </build>
 
   <repositories>
     <repository>
@@ -477,63 +220,45 @@
     </repository>
   </repositories>
 
-  <profiles>
-    <profile>
-      <id>release-central</id>
-      <build>
-        <plugins>
-          <plugin>
-            <groupId>org.apache.maven.plugins</groupId>
-            <artifactId>maven-gpg-plugin</artifactId>
-          </plugin>
+  <build>
+    <plugins>
+      <plugin>
+        <artifactId>maven-compiler-plugin</artifactId>
+        <configuration>
+          <source>${java.version}</source>
+          <target>${java.version}</target>
+        </configuration>
+      </plugin>
+      <plugin>
+        <artifactId>maven-deploy-plugin</artifactId>
+        <version>2.8.1</version>
+        <configuration>
+          <altDeploymentRepository>internal.repo::default::file://${project.build.directory}/mvn-repo</altDeploymentRepository>
+        </configuration>
+      </plugin>
+      <plugin>
+        <groupId>com.github.github</groupId>
+        <artifactId>site-maven-plugin</artifactId>
+        <version>${github.maven-plugin}</version>
+        <configuration>
+          <message>Maven artifacts for ${project.version}</message>
+          <noJekyll>true</noJekyll>
+          <outputDirectory>${project.build.directory}/mvn-repo</outputDirectory>
+          <branch>refs/heads/mvn-repo</branch>
+          <includes><include>**/*</include></includes>
+          <repositoryName>citrus-simulator</repositoryName>
+          <repositoryOwner>lanit-izh</repositoryOwner>
+        </configuration>
+        <executions>
+          <execution>
+            <goals>
+              <goal>site</goal>
+            </goals>
+            <phase>deploy</phase>
+          </execution>
+        </executions>
+      </plugin>
+    </plugins>
+  </build>
 
-          <!-- Deploy using the sonatype nexus staging maven plugin -->
-          <plugin>
-            <groupId>org.apache.maven.plugins</groupId>
-            <artifactId>maven-deploy-plugin</artifactId>
-            <configuration>
-              <skip>true</skip>
-            </configuration>
-          </plugin>
-
-          <plugin>
-            <groupId>org.sonatype.plugins</groupId>
-            <artifactId>nexus-staging-maven-plugin</artifactId>
-            <executions>
-              <execution>
-                <id>default-deploy</id>
-                <phase>deploy</phase>
-                <goals>
-                  <goal>deploy</goal>
-                </goals>
-              </execution>
-            </executions>
-          </plugin>
-        </plugins>
-      </build>
-    </profile>
-
-    <profile>
-      <id>release-labs</id>
-      <distributionManagement>
-        <repository>
-          <id>consol-labs-release</id>
-          <url>scpexe://labs.consol.de/home/maven-repository/www/htdocs/repository</url>
-        </repository>
-        <snapshotRepository>
-          <id>consol-labs-snapshots</id>
-          <url>scpexe://labs.consol.de/home/maven-repository/www/htdocs/snapshots-repository</url>
-        </snapshotRepository>
-      </distributionManagement>
-
-      <build>
-        <plugins>
-          <plugin>
-            <groupId>org.apache.maven.plugins</groupId>
-            <artifactId>maven-gpg-plugin</artifactId>
-          </plugin>
-        </plugins>
-      </build>
-    </profile>
-  </profiles>
 </project>

@@ -182,24 +182,20 @@ public class HttpOperationScenario extends AbstractSimulatorScenario {
         StringBuilder payload = new StringBuilder();
 
         if (property instanceof RefProperty) {
-            if (cycle > 3) {
-                payload.append("\"\"");
-            } else {
-                Model model = definitions.get(((RefProperty) property).getSimpleRef());
-                payload.append("{");
+            Model model = definitions.get(((RefProperty) property).getSimpleRef());
+            payload.append("{");
 
-                if (model.getProperties() != null) {
-                    for (Map.Entry<String, Property> entry : model.getProperties().entrySet()) {
-                        payload.append("\"").append(entry.getKey()).append("\": ").append(createRandomValue(entry.getValue(), true)).append(",");
-                    }
+            if (model.getProperties() != null) {
+                for (Map.Entry<String, Property> entry : model.getProperties().entrySet()) {
+                    payload.append("\"").append(entry.getKey()).append("\": ").append(createRandomValue(entry.getValue(), true)).append(",");
                 }
-
-                if (payload.toString().endsWith(",")) {
-                    payload.replace(payload.length() - 1, payload.length(), "");
-                }
-
-                payload.append("}");
             }
+
+            if (payload.toString().endsWith(",")) {
+                payload.replace(payload.length() - 1, payload.length(), "");
+            }
+
+            payload.append("}");
         } else if (property instanceof ArrayProperty ) {
             payload.append("[");
             payload.append(createRandomValue(((ArrayProperty) property).getItems(), true));
@@ -241,7 +237,7 @@ public class HttpOperationScenario extends AbstractSimulatorScenario {
                 payload.append("");
             }
         }
-        cycle--;
+
         return payload.toString();
     }
 
