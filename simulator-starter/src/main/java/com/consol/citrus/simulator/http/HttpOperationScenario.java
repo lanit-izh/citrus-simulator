@@ -178,7 +178,6 @@ public class HttpOperationScenario extends AbstractSimulatorScenario {
      * @return
      */
     public String createRandomValue(Property property, boolean quotes) {
-        cycle++;
         StringBuilder payload = new StringBuilder();
 
         if (property instanceof RefProperty) {
