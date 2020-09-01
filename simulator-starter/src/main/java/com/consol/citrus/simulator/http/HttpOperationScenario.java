@@ -183,11 +183,12 @@ public class HttpOperationScenario extends AbstractSimulatorScenario {
         if (property instanceof RefProperty) {
             Model model = definitions.get(((RefProperty) property).getSimpleRef());
 
-            boolean b = true;
             String ref = ((RefProperty) property).getSimpleRef();
+            boolean permit = true;
+
             if (controlRef.containsKey(ref)) {
                 if (controlRef.get(ref) > 2) {
-                    b = false;
+                    permit = false;
                     payload.append("null");
                 } else {
                     controlRef.put(ref, controlRef.get(ref) + 1);
@@ -196,7 +197,7 @@ public class HttpOperationScenario extends AbstractSimulatorScenario {
                 controlRef.put(ref, 1);
             }
 
-            if (b) {
+            if (permit) {
                 payload.append("{");
 
                 if (model.getProperties() != null) {
