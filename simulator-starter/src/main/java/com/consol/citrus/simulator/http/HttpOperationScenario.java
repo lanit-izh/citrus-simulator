@@ -189,7 +189,7 @@ public class HttpOperationScenario extends AbstractSimulatorScenario {
             if (controlRef.containsKey(ref)) {
                 if (controlRef.get(ref) > 2) {
                     permit = false;
-                    payload.append("null");
+                    payload.append("{}");
                 } else {
                     controlRef.put(ref, controlRef.get(ref) + 1);
                 }
@@ -224,23 +224,19 @@ public class HttpOperationScenario extends AbstractSimulatorScenario {
             payload.append(createRandomValue(((MapProperty) property).getAdditionalProperties(), true));
             payload.append("}");
         } else if (property instanceof ObjectProperty) {
-            if (((ObjectProperty) property).getProperties() == null) {
-                payload.append("null");
-            } else if (((ObjectProperty) property).getProperties().isEmpty()) {
-                payload.append("null");
-            } else {
-                payload.append("{");
+            payload.append("{");
 
+            if (((ObjectProperty) property).getProperties() != null) {
                 for (Map.Entry<String, Property> entry : ((ObjectProperty) property).getProperties().entrySet()) {
                     payload.append("\"").append(entry.getKey()).append("\": ").append(createRandomValue(entry.getValue(), true)).append(",");
                 }
-
-                if (payload.toString().endsWith(",")) {
-                    payload.replace(payload.length() - 1, payload.length(), "");
-                }
-
-                payload.append("}");
             }
+
+            if (payload.toString().endsWith(",")) {
+                payload.replace(payload.length() - 1, payload.length(), "");
+            }
+
+            payload.append("}");
         } else if (property instanceof StringProperty || property instanceof DateProperty || property instanceof DateTimeProperty) {
             if (quotes) {
                 payload.append("\"");
