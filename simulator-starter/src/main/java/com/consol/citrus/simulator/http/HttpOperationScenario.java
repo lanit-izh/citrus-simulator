@@ -214,7 +214,7 @@ public class HttpOperationScenario extends AbstractSimulatorScenario {
 
                 payload.append("}");
             }
-        } else if (property instanceof ArrayProperty ) {
+        } else if (property instanceof ArrayProperty) {
             payload.append("[");
             payload.append(createRandomValue(((ArrayProperty) property).getItems(), true));
             payload.append("]");
@@ -223,6 +223,24 @@ public class HttpOperationScenario extends AbstractSimulatorScenario {
             payload.append("\"citrus:randomString(10)\": ");
             payload.append(createRandomValue(((MapProperty) property).getAdditionalProperties(), true));
             payload.append("}");
+        } else if (property instanceof ObjectProperty) {
+            if (((ObjectProperty) property).getProperties() == null) {
+                payload.append("null");
+            } else if (((ObjectProperty) property).getProperties().isEmpty()) {
+                payload.append("null");
+            } else {
+                payload.append("{");
+
+                for (Map.Entry<String, Property> entry : ((ObjectProperty) property).getProperties().entrySet()) {
+                    payload.append("\"").append(entry.getKey()).append("\": ").append(createRandomValue(entry.getValue(), true)).append(",");
+                }
+
+                if (payload.toString().endsWith(",")) {
+                    payload.replace(payload.length() - 1, payload.length(), "");
+                }
+
+                payload.append("}");
+            }
         } else if (property instanceof StringProperty || property instanceof DateProperty || property instanceof DateTimeProperty) {
             if (quotes) {
                 payload.append("\"");
