@@ -348,7 +348,7 @@ public class HttpOperationScenario extends AbstractSimulatorScenario {
             payload.append("\"@matchesDatePattern('yyyy-MM-dd'T'hh:mm:ss')@\"");
         } else if (property instanceof IntegerProperty || property instanceof LongProperty) {
             payload.append("\"@isNumber()@\"");
-        } else if (property instanceof FloatProperty || property instanceof DoubleProperty) {
+        } else if (property instanceof DecimalProperty) {
             payload.append("\"@isNumber()@\"");
         } else if (property instanceof BooleanProperty) {
             payload.append("\"@matches(true|false)@\"");
@@ -367,6 +367,7 @@ public class HttpOperationScenario extends AbstractSimulatorScenario {
     private String createValidationExpression(AbstractSerializableParameter parameter) {
         switch (parameter.getType()) {
             case "integer":
+            case "number":
                 return "@isNumber()@";
             case "string":
                 if (parameter.getFormat() != null && parameter.getFormat().equals("date")) {
