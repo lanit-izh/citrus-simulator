@@ -256,9 +256,9 @@ public class HttpOperationScenario extends AbstractSimulatorScenario {
                 payload.append("\"");
             }
         } else if (property instanceof IntegerProperty || property instanceof LongProperty) {
-            payload.append("citrus:randomNumber(10)");
+            payload.append("citrus:randomNumber(9)");
         } else if (property instanceof DecimalProperty) {
-            payload.append("citrus:randomNumber(10)");
+            payload.append("citrus:randomNumber(9)");
         } else if (property instanceof BooleanProperty) {
             payload.append("citrus:randomEnumValue('true', 'false')");
         } else {
